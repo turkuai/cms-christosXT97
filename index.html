@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS</title>
+    
+</head>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    margin-top: 5px;
+    padding: 0;
+    line-height: 1.6;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+nav {
+    border: 1px solid #000;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    border: 1px solid #000;
+    padding: 10px 20px;
+    margin-right: 30px;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: blue;
+    text-decoration: none;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+main {
+    border: 1px solid #000;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+article {
+    border: 1px solid #000;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.article-content {
+    flex: 1;
+    padding-right: 20px;
+}
+
+article img {
+    width: 250px;
+    height: 200px;
+    border: 1px solid #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+footer {
+    border: 1px solid #000;
+    padding: 15px;
+    display: flex;
+}
+
+.footer-company {
+    width: 30%;
+}
+
+.footer-links {
+    display: flex;
+    gap: 50px;
+    flex-grow: 1;
+}
+
+.footer-section {
+    display: flex;
+    flex-direction: column;
+    margin: 0 30px;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.footer-section a {
+    color: blue;
+    text-decoration: none;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.footer-section a:hover {
+    text-decoration: underline;
+}
+
+.copyright {
+    margin-top: 15px;
+    font-size: 0.8em;
+}
+</style>
+<body>
+    <div>
+        <nav>
+            <div class="logo">LOGO</div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Blog</a>
+            </div>
+        </nav>
+        <main>
+            <article>
+                <div class="article-content">
+                    <h2>A title for your first article</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </p>
+                    <p>
+                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+                    </p>
+                </div>
+                <div class="article">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfCyOEc0bADQWarGB2ARkzQyYg4eGfWmx65w&s" alt="">
+                </div>
+            </article>
+            <article>
+                <div class="article-content">
+                    <h2>A title for your first article</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </p>
+                    <p>
+                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+                    </p>
+                </div>
+                <div class="article">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfCyOEc0bADQWarGB2ARkzQyYg4eGfWmx65w&s" alt="">
+                </div>
+            </article>
+        </main>
+        <footer>
+            <div class="footer-company">
+                <h3>Wireframe</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p class="copyright">Â© 2024, Wireframe, All rights reserved.</p>
+            </div>
+            
+            <div class="footer-links">
+                <div class="footer-section">
+                    <a href="#">Home</a>
+                    <a href="#">About</a>
+                    <a href="#">Blog</a>
+                </div>
+                
+                <div class="footer-section">
+                    <a href="#">Facebook</a>
+                    <a href="#">LinkedIn</a>
+                    <a href="#">GitHub</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

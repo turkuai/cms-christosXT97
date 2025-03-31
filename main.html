@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS Admin</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin-top: 5px;
+            padding: 0;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            border: 1px solid #000;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            border: 1px solid #000;
+            padding: 10px 20px;
+            margin-right: 15px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            margin-right: auto;
+            margin-left: 15px;
+        }
+
+        .nav-links a {
+            color: blue;
+            text-decoration: none;
+            position: relative;
+            margin-right: 30px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+        }
+
+        main {
+            border: 1px solid #000;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        article {
+            border: 1px solid #000;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .article-content {
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        article img {
+            width: 150px;
+            height: 120px;
+            border: 1px solid #000;
+        }
+
+        h2 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        h2 .edit-btn {
+            margin-left: 10px;
+        }
+
+        footer {
+            border: 1px solid #000;
+            padding: 15px;
+            display: flex;
+            position: relative;
+        }
+
+        .footer-company {
+            width: 30%;
+            position: relative;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 50px;
+            flex-grow: 1;
+        }
+
+        .footer-section {
+            display: flex;
+            flex-direction: column;
+            margin: 0 30px;
+            justify-content: center;
+            flex-grow: 1;
+        }
+
+        .footer-section a {
+            color: blue;
+            text-decoration: none;
+            margin-bottom: 10px;
+            text-align: center;
+            position: relative;
+        }
+
+        .copyright {
+            margin-top: 15px;
+            font-size: 0.8em;
+        }
+
+        /* Button styles */
+        .btn {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-left: 5px;
+            background-color: white;
+            border: 1px solid #ccc;
+        }
+
+        .edit-btn {
+            color: blue;
+            border-color: blue;
+        }
+
+        .delete-btn {
+            color: red;
+            border-color: red;
+        }
+
+        .add-btn {
+            color: green;
+            border-color: green;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            font-size: 20px;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 60%;
+            max-width: 600px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: black;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .form-group textarea {
+            height: 100px;
+        }
+
+        .form-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .form-buttons button {
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="logo-section">
+                <div class="logo">LOGO</div>
+                <button class="btn edit-btn" onclick="editItem('logo')">✏️</button>
+            </div>
+            <div class="nav-links">
+                <div class="nav-item">
+                    <a href="#">Home</a>
+                    <button class="btn edit-btn" onclick="editItem('nav-home')">✏️</button>
+                    <button class="btn delete-btn" onclick="deleteItem('nav-home')">✖</button>
+                </div>
+                <div class="nav-item">
+                    <a href="#">About</a>
+                    <button class="btn edit-btn" onclick="editItem('nav-about')">✏️</button>
+                    <button class="btn delete-btn" onclick="deleteItem('nav-about')">✖</button>
+                </div>
+                <div class="nav-item">
+                    <a href="#">Blog</a>
+                    <button class="btn edit-btn" onclick="editItem('nav-blog')">✏️</button>
+                    <button class="btn delete-btn" onclick="deleteItem('nav-blog')">✖</button>
+                </div>
+            </div>
+            <button class="btn add-btn" onclick="showAddModal('navigation')">+</button>
+        </nav>
+        
+        <main>
+            <article>
+                <div class="article-content">
+                    <h2>
+                        A title for your first article
+                        <button class="btn edit-btn" onclick="editItem('article-1-title')">✏️</button>
+                    </h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </p>
+                    <p>
+                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+                    </p>
+                </div>
+                <div>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfCyOEc0bADQWarGB2ARkzQyYg4eGfWmx65w&s" alt="">
+                    <button class="btn edit-btn" onclick="editItem('article-1-image')">✏️</button>
+                </div>
+                <button class="btn delete-btn" style="position: absolute; top: 10px; right: 10px;" onclick="deleteItem('article-1')">✖</button>
+            </article>
+            
+            <article>
+                <div class="article-content">
+                    <h2>
+                        A title for your first article
+                        <button class="btn edit-btn" onclick="editItem('article-2-title')">✏️</button>
+                    </h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </p>
+                    <p>
+                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+                    </p>
+                </div>
+                <div>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfCyOEc0bADQWarGB2ARkzQyYg4eGfWmx65w&s" alt="">
+                    <button class="btn edit-btn" onclick="editItem('article-2-image')">✏️</button>
+                </div>
+                <button class="btn delete-btn" style="position: absolute; top: 10px; right: 10px;" onclick="deleteItem('article-2')">✖</button>
+            </article>
+            
+            <button class="btn add-btn" onclick="showAddModal('article')">+</button>
+        </main>
+        
+        <footer>
+            <div class="footer-company">
+                <h3>
+                    Your company's name
+                    <button class="btn edit-btn" onclick="editItem('company-name')">✏️</button>
+                </h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p class="copyright">© 2024, Company's name. All rights reserved.</p>
+            </div>
+            
+            <div class="footer-links">
+                <div class="footer-section">
+                    <div style="position: relative; text-align: center;">
+                        <a href="#">Home</a>
+                        <button class="btn edit-btn" onclick="editItem('footer-home')">✏️</button>
+                        <button class="btn delete-btn" onclick="deleteItem('footer-home')">✖</button>
+                    </div>
+                    <div style="position: relative; text-align: center;">
+                        <a href="#">About</a>
+                        <button class="btn edit-btn" onclick="editItem('footer-about')">✏️</button>
+                        <button class="btn delete-btn" onclick="deleteItem('footer-about')">✖</button>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <div style="position: relative; text-align: center;">
+                        <a href="#">Facebook</a>
+                        <button class="btn edit-btn" onclick="editItem('footer-facebook')">✏️</button>
+                        <button class="btn delete-btn" onclick="deleteItem('footer-facebook')">✖</button>
+                    </div>
+                    <div style="position: relative; text-align: center;">
+                        <a href="#">LinkedIn</a>
+                        <button class="btn edit-btn" onclick="editItem('footer-linkedin')">✏️</button>
+                        <button class="btn delete-btn" onclick="deleteItem('footer-linkedin')">✖</button>
+                    </div>
+                    <div style="position: relative; text-align: center;">
+                        <a href="#">GitHub</a>
+                        <button class="btn edit-btn" onclick="editItem('footer-github')">✏️</button>
+                        <button class="btn delete-btn" onclick="deleteItem('footer-github')">✖</button>
+                    </div>
+                </div>
+                <button class="btn add-btn" onclick="showAddModal('footer-link')">+</button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('editModal')">&times;</span>
+            <h2>Edit Item</h2>
+            <form id="editForm">
+                <input type="hidden" id="editItemId">
+                <div class="form-group">
+                    <label for="editTitle">Title/Text:</label>
+                    <input type="text" id="editTitle">
+                </div>
+                <div class="form-group" id="editUrlGroup">
+                    <label for="editUrl">URL:</label>
+                    <input type="text" id="editUrl">
+                </div>
+                <div class="form-group" id="editImageGroup">
+                    <label for="editImage">Image URL:</label>
+                    <input type="text" id="editImage">
+                </div>
+                <div class="form-group" id="editContentGroup">
+                    <label for="editContent">Content:</label>
+                    <textarea id="editContent"></textarea>
+                </div>
+                <div class="form-buttons">
+                    <button type="button" onclick="closeModal('editModal')">Cancel</button>
+                    <button type="button" onclick="saveEditedItem()">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Modal -->
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addModal')">&times;</span>
+            <h2>Add New Item</h2>
+            <form id="addForm">
+                <input type="hidden" id="addItemType">
+                <div class="form-group">
+                    <label for="addTitle">Title/Text:</label>
+                    <input type="text" id="addTitle">
+                </div>
+                <div class="form-group" id="addUrlGroup">
+                    <label for="addUrl">URL:</label>
+                    <input type="text" id="addUrl">
+                </div>
+                <div class="form-group" id="addImageGroup">
+                    <label for="addImage">Image URL:</label>
+                    <input type="text" id="addImage">
+                </div>
+                <div class="form-group" id="addContentGroup">
+                    <label for="addContent">Content:</label>
+                    <textarea id="addContent"></textarea>
+                </div>
+                <div class="form-buttons">
+                    <button type="button" onclick="closeModal('addModal')">Cancel</button>
+                    <button type="button" onclick="addNewItem()">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('deleteModal')">&times;</span>
+            <h2>Confirm Deletion</h2>
+            <p>Are you sure you want to delete this item?</p>
+            <input type="hidden" id="deleteItemId">
+            <div class="form-buttons">
+                <button type="button" onclick="closeModal('deleteModal')">Cancel</button>
+                <button type="button" onclick="confirmDelete()" style="background-color: #ff4d4d; color: white;">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Edit functionality
+        function editItem(itemId) {
+            document.getElementById('editItemId').value = itemId;
+            
+            // Reset form visibility
+            document.getElementById('editUrlGroup').style.display = 'block';
+            document.getElementById('editImageGroup').style.display = 'block';
+            document.getElementById('editContentGroup').style.display = 'block';
+            
+            // Populate fields based on item type
+            if (itemId === 'logo') {
+                document.getElementById('editTitle').value = 'LOGO';
+                document.getElementById('editUrlGroup').style.display = 'none';
+                document.getElementById('editImageGroup').style.display = 'none';
+                document.getElementById('editContentGroup').style.display = 'none';
+            } else if (itemId.startsWith('nav-')) {
+                const linkText = document.querySelector(`[onclick="editItem('${itemId}')"]`).previousElementSibling.textContent;
+                document.getElementById('editTitle').value = linkText;
+                document.getElementById('editUrl').value = '#';
+                document.getElementById('editImageGroup').style.display = 'none';
+                document.getElementById('editContentGroup').style.display = 'none';
+            } else if (itemId.startsWith('article-') && itemId.endsWith('-title')) {
+                const titleText = document.querySelector(`[onclick="editItem('${itemId}')"]`).parentElement.textContent.trim().replace('✏️', '').trim();
+                document.getElementById('editTitle').value = titleText;
+                document.getElementById('editUrlGroup').style.display = 'none';
+                document.getElementById('editImageGroup').style.display = 'none';
+                document.getElementById('editContentGroup').style.display = 'none';
+            } else if (itemId.startsWith('article-') && itemId.endsWith('-image')) {
+                const imgSrc = document.querySelector(`[onclick="editItem('${itemId}')"]`).previousElementSibling.src;
+                document.getElementById('editTitle').value = 'Article Image';
+                document.getElementById('editImage').value = imgSrc;
+                document.getElementById('editUrlGroup').style.display = 'none';
+                document.getElementById('editContentGroup').style.display = 'none';
+            } else if (itemId === 'company-name') {
+                const companyName = document.querySelector(`[onclick="editItem('${itemId}')"]`).parentElement.textContent.trim().replace('✏️', '').trim();
+                document.getElementById('editTitle').value = companyName;
+                document.getElementById('editUrlGroup').style.display = 'none';
+                document.getElementById('editImageGroup').style.display = 'none';
+                document.getElementById('editContentGroup').style.display = 'none';
+            } else if (itemId.startsWith('footer-')) {
+                const linkText = document.querySelector(`[onclick="editItem('${itemId}')"]`).previousElementSibling.textContent;
+                document.getElementById('editTitle').value = linkText;
+                document.getElementById('editUrl').value = '#';
+                document.getElementById('editImageGroup').style.display = 'none';
+                document.getElementById('editContentGroup').style.display = 'none';
+            }
+            
+            // Show modal
+            document.getElementById('editModal').style.display = 'block';
+        }
+
+        // Save edited item
+        function saveEditedItem() {
+            const itemId = document.getElementById('editItemId').value;
+            const newTitle = document.getElementById('editTitle').value;
+            const newUrl = document.getElementById('editUrl').value;
+            const newImage = document.getElementById('editImage').value;
+            
+            // Update the item based on its type
+            if (itemId === 'logo') {
+                document.querySelector('.logo').textContent = newTitle;
+            } else if (itemId.startsWith('nav-')) {
+                document.querySelector(`[onclick="editItem('${itemId}')"]`).previousElementSibling.textContent = newTitle;
+            } else if (itemId.startsWith('article-') && itemId.endsWith('-title')) {
+                const titleElement = document.querySelector(`[onclick="editItem('${itemId}')"]`).parentElement;
+                titleElement.innerHTML = `${newTitle} <button class="btn edit-btn" onclick="editItem('${itemId}')">✏️</button>`;
+            } else if (itemId.startsWith('article-') && itemId.endsWith('-image')) {
+                document.querySelector(`[onclick="editItem('${itemId}')"]`).previousElementSibling.src = newImage;
+            } else if (itemId === 'company-name') {
+                const titleElement = document.querySelector(`[onclick="editItem('${itemId}')"]`).parentElement;
+                titleElement.innerHTML = `${newTitle} <button class="btn edit-btn" onclick="editItem('${itemId}')">✏️</button>`;
+            } else if (itemId.startsWith('footer-')) {
+                document.querySelector(`[onclick="editItem('${itemId}')"]`).previousElementSibling.textContent = newTitle;
+            }
+            
+            // Close modal
+            closeModal('editModal');
+            
+            // Show confirmation
+            alert('Item updated successfully!');
+        }
+
+        // Delete functionality
+        function deleteItem(itemId) {
+            document.getElementById('deleteItemId').value = itemId;
+            document.getElementById('deleteModal').style.display = 'block';
+        }
+
+        // Confirm deletion
+        function confirmDelete() {
+            const itemId = document.getElementById('deleteItemId').value;
+            
+            if (itemId.startsWith('nav-')) {
+                const navItem = document.querySelector(`[onclick="editItem('${itemId}')"]`).parentElement;
+                navItem.remove();
+            } else if (itemId.startsWith('article-') && !itemId.includes('-title') && !itemId.includes('-image')) {
+                document.querySelector(`[onclick="deleteItem('${itemId}')"]`).parentElement.remove();
+            } else if (itemId.startsWith('footer-')) {
+                const footerItem = document.querySelector(`[onclick="editItem('${itemId}')"]`).parentElement;
+                footerItem.remove();
+            }
+            
+            closeModal('deleteModal');
+            alert('Item deleted successfully!');
+        }
+
+        // Add functionality
+        function showAddModal(type) {
+            document.getElementById('addItemType').value = type;
+            
+            // Reset form visibility
+            document.getElementById('addUrlGroup').style.display = 'block';
+            document.getElementById('addImageGroup').style.display = 'block';
+            document.getElementById('addContentGroup').style.display = 'block';
+            
+            // Configure form based on item type
+            if (type === 'navigation') {
+                document.getElementById('addTitle').value = 'New Link';
+                document.getElementById('addUrl').value = '#';
+                document.getElementById('addImageGroup').style.display = 'none';
+                document.getElementById('addContentGroup').style.display = 'none';
+            } else if (type === 'article') {
+                document.getElementById('addTitle').value = 'New Article Title';
+                document.getElementById('addUrl').style.display = 'none';
+                document.getElementById('addImage').value = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfCyOEc0bADQWarGB2ARkzQyYg4eGfWmx65w&s';
+                document.getElementById('addContent').value = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...';
+            } else if (type === 'footer-link') {
+                document.getElementById('addTitle').value = 'New Footer Link';
+                document.getElementById('addUrl').value = '#';
+                document.getElementById('addImageGroup').style.display = 'none';
+                document.getElementById('addContentGroup').style.display = 'none';
+            }
+            
+            document.getElementById('addModal').style.display = 'block';
+        }
+
+        // Add new item
+        function addNewItem() {
+            const type = document.getElementById('addItemType').value;
+            const title = document.getElementById('addTitle').value;
+            const url = document.getElementById('addUrl').value;
+            const image = document.getElementById('addImage').value;
+            const content = document.getElementById('addContent').value;
+            
+            // Add new item based on type
+            if (type === 'navigation') {
+                const navLinks = document.querySelector('.nav-links');
+                const newId = 'nav-' + title.toLowerCase().replace(/\s+/g, '-');
+                const newNavItem = document.createElement('div');
+                newNavItem.className = 'nav-item';
+                newNavItem.innerHTML = `
+                    <a href="${url}">${title}</a>
+                    <button class="btn edit-btn" onclick="editItem('${newId}')">✏️</button>
+                    <button class="btn delete-btn" onclick="deleteItem('${newId}')">✖</button>
+                `;
+                navLinks.appendChild(newNavItem);
+            } else if (type === 'article') {
+                const main = document.querySelector('main');
+                const articles = document.querySelectorAll('article');
+                const newId = 'article-' + (articles.length + 1);
+                const newArticle = document.createElement('article');
+                newArticle.innerHTML = `
+                    <div class="article-content">
+                        <h2>
+                            ${title}
+                            <button class="btn edit-btn" onclick="editItem('${newId}-title')">✏️</button>
+                        </h2>
+                        <p>${content}</p>
+                    </div>
+                    <div>
+                        <img src="${image}" alt="">
+                        <button class="btn edit-btn" onclick="editItem('${newId}-image')">✏️</button>
+                    </div>
+                    <button class="btn delete-btn" style="position: absolute; top: 10px; right: 10px;" onclick="deleteItem('${newId}')">✖</button>
+                `;
+                
+                // Insert before the add button
+                main.insertBefore(newArticle, document.querySelector('main .add-btn'));
+            } else if (type === 'footer-link') {
+                const footerSection = document.querySelector('.footer-section:last-child');
+                const newId = 'footer-' + title.toLowerCase().replace(/\s+/g, '-');
+                const newLinkContainer = document.createElement('div');
+                newLinkContainer.style.position = 'relative';
+                newLinkContainer.style.textAlign = 'center';
+                newLinkContainer.innerHTML = `
+                    <a href="${url}">${title}</a>
+                    <button class="btn edit-btn" onclick="editItem('${newId}')">✏️</button>
+                    <button class="btn delete-btn" onclick="deleteItem('${newId}')">✖</button>
+                `;
+                footerSection.appendChild(newLinkContainer);
+            }
+            
+            closeModal('addModal');
+            alert('New item added successfully!');
+        }
+
+        // Close modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+    </script>
+</body>
+</html>
