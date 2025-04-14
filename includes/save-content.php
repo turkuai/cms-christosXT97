@@ -57,6 +57,43 @@ if (isset($postData['type']) && isset($postData['index'])) {
                 }
             }
             break;
+            
+        case 'newArticle':
+            if (isset($postData['value']) && is_array($postData['value'])) {
+                $newArticle = [
+                    'title' => sanitizeContent($postData['value']['title']),
+                    'content' => sanitizeContent($postData['value']['content']),
+                    'image' => ''
+                ];
+                $content['articles'][] = $newArticle;
+            }
+            break;
+            
+        case 'removeArticle':
+            if (isset($content['articles'][$index])) {
+                array_splice($content['articles'], $index, 1);
+            }
+            break;
+            
+        case 'socialLinks':
+            if (isset($postData['value']) && is_array($postData['value'])) {
+                $content['socialLinks'] = [];
+                foreach ($postData['value'] as $link) {
+                    if (isset($link['label']) && isset($link['url'])) {
+                        $content['socialLinks'][] = [
+                            'label' => sanitizeContent($link['label']),
+                            'url' => filter_var($link['url'], FILTER_VALIDATE_URL) ?: '#'
+                        ];
+                    }
+                }
+            }
+            break;
+            
+        case 'removeSocialLink':
+            if (isset($content['socialLinks'][$index])) {
+                array_splice($content['socialLinks'], $index, 1);
+            }
+            break;
     }
     
     // Save updated content

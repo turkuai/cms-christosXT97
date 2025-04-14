@@ -28,21 +28,27 @@ $content = loadContentData();
 
     <!-- Main Content Section -->
     <main>
-        <?php foreach ($content['articles'] as $index => $article): ?>
-            <article class="content-box">
-                <div class="article-content">
-                    <h2><?php echo htmlspecialchars($article['title']); ?></h2>
-                    <?php echo $article['content']; ?>
-                </div>
-                <div class="article-image">
-                    <?php if (!empty($article['image'])): ?>
-                        <div class="view-image" style="background-image: url('<?php echo htmlspecialchars($article['image']); ?>');"></div>
-                    <?php else: ?>
-                        <div class="view-image"></div>
-                    <?php endif; ?>
-                </div>
-            </article>
-        <?php endforeach; ?>
+        <?php if (empty($content['articles'])): ?>
+            <div class="no-content">
+                <p>No content available. Please add articles in the admin panel.</p>
+            </div>
+        <?php else: ?>
+            <?php foreach ($content['articles'] as $article): ?>
+                <article class="content-box">
+                    <div class="article-content">
+                        <h2><?php echo htmlspecialchars($article['title']); ?></h2>
+                        <?php echo $article['content']; ?>
+                    </div>
+                    <div class="article-image">
+                        <?php if (!empty($article['image'])): ?>
+                            <div class="view-image" style="background-image: url('<?php echo htmlspecialchars($article['image']); ?>');"></div>
+                        <?php else: ?>
+                            <div class="view-image"></div>
+                        <?php endif; ?>
+                    </div>
+                </article>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </main>
 
     <!-- Footer Section -->
@@ -61,9 +67,15 @@ $content = loadContentData();
         </div>
         <div class="footer-right">
             <ul>
-                <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
-                <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
-                <li><a href="https://github.com" target="_blank">GitHub</a></li>
+                <?php if (isset($content['socialLinks']) && !empty($content['socialLinks'])): ?>
+                    <?php foreach ($content['socialLinks'] as $link): ?>
+                        <li><a href="<?php echo htmlspecialchars($link['url']); ?>" target="_blank"><?php echo htmlspecialchars($link['label']); ?></a></li>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
+                    <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
+                    <li><a href="https://github.com" target="_blank">GitHub</a></li>
+                <?php endif; ?>
             </ul>
         </div>
     </footer>

@@ -1,4 +1,4 @@
-/* Enhanced Color Scheme for CMS with Responsive Design */
+/* Enhanced Color Scheme for CMS */
 :root {
     /* Primary Colors */
     --primary-color: #3b82f6;
@@ -41,7 +41,6 @@
 
 html {
     height: 100%;
-    font-size: 16px;
 }
 
 body {
@@ -79,10 +78,7 @@ header {
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     letter-spacing: 1px;
-}
-
-nav {
-    flex: 1;
+    position: relative;
 }
 
 nav ul {
@@ -122,29 +118,6 @@ nav ul li a:hover::after {
     width: 100%;
 }
 
-/* Mobile menu button */
-.mobile-menu-btn {
-    display: none;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 30px;
-    height: 21px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    z-index: 10;
-}
-
-.mobile-menu-btn span {
-    display: block;
-    width: 100%;
-    height: 3px;
-    background: var(--neutral-100);
-    border-radius: 3px;
-    transition: all 0.3s ease;
-}
-
 /* Main Content Styling */
 main {
     padding: 25px;
@@ -165,6 +138,7 @@ main {
     justify-content: space-between;
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
 }
 
 .content-box:hover {
@@ -172,21 +146,35 @@ main {
     box-shadow: 0 6px 10px rgba(0,0,0,0.08);
 }
 
+.article-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.article-controls {
+    display: flex;
+    align-items: center;
+}
+
 .article-content {
     flex: 1;
     margin-right: 20px;
+    position: relative;
 }
 
 .article-content h2 {
-    font-size: 1.375rem;
-    margin-bottom: 15px;
+    font-size: 22px;
     color: var(--primary-dark);
     border-bottom: 2px solid var(--primary-light);
     padding-bottom: 8px;
+    margin-right: 70px;
 }
 
 .article-content p {
-    font-size: 0.875rem;
+    font-size: 14px;
     line-height: 1.6;
     color: var(--neutral-700);
     margin-bottom: 10px;
@@ -200,6 +188,7 @@ main {
 .image-container {
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .placeholder-image {
@@ -266,7 +255,7 @@ main {
     padding: 10px 12px;
     border: 1px solid var(--neutral-400);
     border-radius: 4px;
-    font-size: 0.75rem;
+    font-size: 12px;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     background-color: var(--neutral-100);
 }
@@ -281,7 +270,7 @@ main {
     padding: 10px 12px;
     cursor: pointer;
     border-radius: 4px;
-    font-size: 0.75rem;
+    font-size: 12px;
     text-align: center;
     transition: all 0.2s ease;
     font-weight: 500;
@@ -324,20 +313,23 @@ footer {
 
 .footer-left {
     flex: 0 0 40%;
+    position: relative;
 }
 
 .footer-left h3 {
-    font-size: 1.125rem;
+    font-size: 18px;
     margin-bottom: 15px;
     color: var(--neutral-100);
     font-weight: 600;
+    position: relative;
 }
 
 .footer-left p {
-    font-size: 0.75rem;
+    font-size: 12px;
     margin-bottom: 10px;
     line-height: 1.5;
     color: var(--neutral-200);
+    position: relative;
 }
 
 .footer-center, .footer-right {
@@ -352,12 +344,13 @@ footer {
 
 .footer-center li, .footer-right li {
     margin-bottom: 12px;
+    position: relative;
 }
 
 .footer-center a, .footer-right a {
     color: var(--neutral-200);
     text-decoration: none;
-    font-size: 0.875rem;
+    font-size: 14px;
     transition: color 0.2s ease;
     position: relative;
     padding-bottom: 2px;
@@ -415,62 +408,285 @@ footer {
     transition: opacity 0.3s ease;
 }
 
-/* Animation for page load */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+/* Edit and Delete Buttons */
+.edit-btn, .delete-btn, .add-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    position: absolute;
 }
 
-.content-box {
-    animation: fadeIn 0.5s ease-out forwards;
+.edit-btn {
+    color: var(--primary-color);
+    font-size: 16px;
 }
 
-.content-box:nth-child(2) {
-    animation-delay: 0.2s;
+.edit-btn:hover {
+    background-color: var(--primary-light);
+}
+
+.delete-btn {
+    color: var(--error-color);
+    font-size: 20px;
+    top: 20px;
+    right: 20px;
+}
+
+.delete-btn:hover {
+    color: var(--error-dark);
+}
+
+.edit-btn.image-edit-btn {
+    top: 5px;
+    right: 5px;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 10;
+}
+
+.content-edit-btn {
+    bottom: 0;
+    right: 20px;
+    position: relative;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+/* Footer button positioning */
+.footer-left h3 .edit-btn {
+    position: absolute;
+    right: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.footer-left p .edit-btn {
+    position: absolute;
+    right: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.footer-right li .edit-btn {
+    position: absolute;
+    right: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.footer-right li .delete-btn {
+    position: absolute;
+    right: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+}
+
+/* Add Article Button */
+.admin-actions {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.add-btn {
+    color: var(--primary-color);
+    font-size: 30px;
+    position: relative;
+    width: 40px;
+    height: 40px;
+}
+
+.add-btn:hover {
+    color: var(--primary-dark);
+}
+
+#add-social-link-btn {
+    position: relative;
+    transform: none;
+    margin-top: 10px;
+}
+
+/* View Site Button */
+.admin-controls {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.view-site-btn {
+    background-color: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    display: inline-block;
+}
+
+.view-site-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: var(--neutral-100);
+    border-radius: 6px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+}
+
+.modal-content h2 {
+    padding: 15px 20px;
+    margin: 0;
+    background-color: var(--primary-color);
+    color: var(--neutral-100);
+    font-size: 18px;
+}
+
+#modal-body {
+    padding: 20px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.modal-footer {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    background-color: var(--neutral-200);
+    border-top: 1px solid var(--neutral-300);
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: var(--neutral-100);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.primary-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.primary-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+.secondary-btn {
+    background-color: var(--neutral-300);
+    color: var(--neutral-700);
+}
+
+.secondary-btn:hover {
+    background-color: var(--neutral-400);
+}
+
+/* Form Controls in Modal */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: var(--neutral-700);
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--neutral-400);
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+textarea.form-control {
+    min-height: 150px;
+    resize: vertical;
+}
+
+/* Notification */
+#save-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Fade-in animation for new content */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.content-box.new {
+    animation: fadeInUp 0.5s ease-out forwards;
 }
 
 /* Media Queries for Responsiveness */
-@media (max-width: 1024px) {
-    html {
-        font-size: 15px;
-    }
-    
-    .article-image {
-        min-width: 200px;
-    }
-}
-
-@media (max-width: 900px) {
-    main {
-        padding: 20px;
-    }
-    
-    .content-box {
-        padding: 20px;
-    }
-}
-
 @media (max-width: 768px) {
-    html {
-        font-size: 14px;
-    }
-    
-    header {
-        flex-wrap: wrap;
-        padding: 15px;
-    }
-    
-    .logo {
-        margin-right: 20px;
-    }
-    
-    nav ul li {
-        margin-right: 15px;
-    }
-    
     .content-box {
         flex-direction: column;
-        padding: 15px;
     }
     
     .article-content {
@@ -485,119 +701,10 @@ footer {
     
     footer {
         flex-direction: column;
-        padding: 20px;
     }
     
     .footer-left, .footer-center, .footer-right {
         margin-bottom: 20px;
         width: 100%;
-    }
-    
-    .footer-center, .footer-right {
-        align-items: flex-start;
-    }
-}
-
-@media (max-width: 576px) {
-    header {
-        justify-content: space-between;
-        position: relative;
-    }
-    
-    .logo {
-        width: 120px;
-        height: 40px;
-        margin-right: 0;
-    }
-    
-    .mobile-menu-btn {
-        display: flex;
-    }
-    
-    nav {
-        position: absolute;
-        top: 70px;
-        left: 0;
-        width: 100%;
-        background: var(--primary-dark);
-        box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-        border-radius: 0 0 5px 5px;
-        overflow: hidden;
-        max-height: 0;
-        transition: max-height 0.3s ease-out;
-        z-index: 1000;
-    }
-    
-    nav.active {
-        max-height: 300px;
-    }
-    
-    nav ul {
-        flex-direction: column;
-        padding: 10px 0;
-    }
-    
-    nav ul li {
-        margin: 0;
-        width: 100%;
-        text-align: center;
-    }
-    
-    nav ul li a {
-        display: block;
-        padding: 12px 20px;
-    }
-    
-    nav ul li a::after {
-        display: none;
-    }
-    
-    nav ul li a:hover {
-        background-color: rgba(255,255,255,0.1);
-    }
-    
-    main {
-        padding: 15px;
-    }
-    
-    .content-box {
-        padding: 15px;
-        border-left-width: 3px;
-    }
-    
-    .placeholder-image {
-        height: 120px;
-    }
-    
-    .image-controls {
-        gap: 4px;
-    }
-    
-    .image-url-input, .add-image-btn, .delete-image-btn {
-        padding: 8px 10px;
-    }
-    
-    footer {
-        padding: 15px;
-        text-align: center;
-    }
-    
-    .footer-center, .footer-right {
-        align-items: center;
-    }
-}
-
-@media (max-width: 340px) {
-    .logo {
-        width: 100px;
-        font-size: 14px;
-    }
-    
-    main {
-        padding: 10px;
-    }
-    
-    .content-box {
-        padding: 12px;
     }
 }
