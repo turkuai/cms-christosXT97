@@ -1,3 +1,5 @@
+# .htaccess
+
 # Ensure proper permissions for PHP files
 <FilesMatch "\.(php)$">
     # Set correct MIME type for PHP

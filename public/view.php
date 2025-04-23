@@ -1,4 +1,6 @@
 <?php
+//public/view.php
+
 // Include shared functions
 require_once '../includes/functions.php';
 
@@ -41,7 +43,7 @@ $content = loadContentData();
                     </div>
                     <div class="article-image">
                         <?php if (!empty($article['image'])): ?>
-                            <div class="view-image" style="background-image: url('<?php echo htmlspecialchars($article['image']); ?>');"></div>
+                            <div class="view-image" style="background-image: url('<?php echo htmlspecialchars($article['image']); ?>'); background-size: cover; background-position: center center;"></div>
                         <?php else: ?>
                             <div class="view-image"></div>
                         <?php endif; ?>

@@ -1,4 +1,6 @@
 <?php
+//includes/save-content.php
+
 header('Content-Type: application/json');
 
 // Include shared functions
@@ -41,10 +43,24 @@ if (isset($postData['type']) && isset($postData['index'])) {
             
         case 'image':
             if (isset($postData['value']) && isset($content['articles'][$index])) {
-                // Basic URL validation
-                $url = filter_var($postData['value'], FILTER_VALIDATE_URL);
-                if ($url !== false || empty($postData['value'])) {
-                    $content['articles'][$index]['image'] = $url;
+                // Clean and process the image URL
+                $imageUrl = trim($postData['value']);
+                
+                // Ensure the URL is properly formatted
+                if (!empty($imageUrl)) {
+                    // If URL doesn't start with http or https, add it
+                    if (!preg_match('/^https?:\/\//i', $imageUrl)) {
+                        $imageUrl = 'https://' . $imageUrl;
+                    }
+                    
+                    // Basic URL validation
+                    $url = filter_var($imageUrl, FILTER_VALIDATE_URL);
+                    if ($url !== false) {
+                        $content['articles'][$index]['image'] = $url;
+                    }
+                } else {
+                    // Empty value clears the image
+                    $content['articles'][$index]['image'] = '';
                 }
             }
             break;

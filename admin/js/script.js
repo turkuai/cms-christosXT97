@@ -1,3 +1,5 @@
+// admin/js/script.js
+
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     // Navigation link highlighting
@@ -434,6 +436,8 @@ function saveModalContent(editTarget, articleId) {
             if (imgContainer && value) {
                 // Set image and show delete button
                 imgContainer.style.backgroundImage = `url('${value}')`;
+                imgContainer.style.backgroundSize = 'cover';
+                imgContainer.style.backgroundPosition = 'center center';
                 imgContainer.classList.add('has-image');
                 if (deleteBtn) deleteBtn.style.display = 'block';
                 
@@ -575,6 +579,7 @@ function initEditButtons(container = document) {
                 case 'facebook-link':
                 case 'linkedin-link':
                 case 'github-link':
+                case 'social-link':
                     const linkElement = this.closest('li').querySelector('a');
                     const linkText = linkElement.textContent;
                     const linkUrl = linkElement.href;
@@ -663,8 +668,37 @@ function initDeleteButtons(container = document) {
 function initAddSocialLink() {
     const addSocialLinkBtn = document.getElementById('add-social-link-btn');
     
+    // If there's a last list item with an add button, use that instead
+    if (!addSocialLinkBtn) {
+        const lastLi = document.querySelector('.footer-right ul li:last-child');
+        if (lastLi) {
+            const addBtn = lastLi.querySelector('.add-btn');
+            if (addBtn) {
+                addBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    openModal('Add Social Link', `
+                        <div class="form-group">
+                            <label for="link-label-input">Link Label</label>
+                            <input type="text" id="link-label-input" class="form-control" placeholder="e.g. Twitter">
+                        </div>
+                        <div class="form-group">
+                            <label for="link-url-input">URL</label>
+                            <input type="text" id="link-url-input" class="form-control" placeholder="https://...">
+                        </div>
+                    `, 'social-link', 'new');
+                });
+                return;
+            }
+        }
+    }
+    
     if (addSocialLinkBtn) {
-        addSocialLinkBtn.addEventListener('click', function() {
+        addSocialLinkBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
             openModal('Add Social Link', `
                 <div class="form-group">
                     <label for="link-label-input">Link Label</label>
@@ -710,6 +744,26 @@ function addSocialLink(label, url) {
     
     // Show notification
     showNotification('Social link added');
+    
+    // After adding a new link, ensure the add button's events are properly initialized
+    const newAddBtn = document.querySelector('.footer-right ul li:last-child .add-btn');
+    if (newAddBtn) {
+        newAddBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            openModal('Add Social Link', `
+                <div class="form-group">
+                    <label for="link-label-input">Link Label</label>
+                    <input type="text" id="link-label-input" class="form-control" placeholder="e.g. Twitter">
+                </div>
+                <div class="form-group">
+                    <label for="link-url-input">URL</label>
+                    <input type="text" id="link-url-input" class="form-control" placeholder="https://...">
+                </div>
+            `, 'social-link', 'new');
+        });
+    }
 }
 
 /**
@@ -1013,7 +1067,7 @@ function createArticleElement(article, index) {
         </div>
         <div class="article-image">
             <div class="image-container">
-                <div class="placeholder-image" id="image-placeholder-${index}"${article.image ? ` style="background-image: url('${article.image}')"` : ''}${article.image ? ' class="has-image"' : ''}></div>
+                <div class="placeholder-image" id="image-placeholder-${index}"${article.image ? ` style="background-image: url('${article.image}'); background-size: cover; background-position: center center;"` : ''}${article.image ? ' class="has-image"' : ''}></div>
                 <button class="edit-btn image-edit-btn" data-target="article-image" title="Edit Image">
                     <i class="fas fa-edit"></i>
                 </button>
@@ -1153,16 +1207,9 @@ function initSingleImageControl(container, index) {
                 placeholder.innerHTML = '';
                 placeholder.classList.remove('loading');
                 
-                // Determine optimal display method based on image dimensions
-                const aspectRatio = this.width / this.height;
-                
-                if (aspectRatio > 1.5 || aspectRatio < 0.67) {
-                    // Very wide or tall image - use contain
-                    placeholder.style.backgroundSize = 'contain';
-                } else {
-                    // More standard proportions - use cover for better aesthetics
-                    placeholder.style.backgroundSize = 'cover';
-                }
+                // Always use cover for consistent appearance
+                placeholder.style.backgroundSize = 'cover';
+                placeholder.style.backgroundPosition = 'center center';
                 
                 // Set the background image with a fade-in effect
                 placeholder.style.opacity = '0';
