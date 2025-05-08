@@ -1,6 +1,32 @@
-# CMS
+# CMS Project
 
-The purpose of this project is to create a simple CMS system. Using a visual editor users are able to create a website without the need of coding it. It's our job to make this possible for them.
- 
+A simple Content Management System built with PHP.
 
- website public links: https://turkuai.netlify.app/
+## Features
+
+- Admin panel for content management
+- Article publishing system
+- Clean and responsive design
+- Image upload functionality
+- User authentication
+
+## Deployment
+
+The website is deployed at: http://taikukkula.fi/~christosXT97/cms/
+
+## Installation
+
+1. Clone the repository
+2. Import the database schema
+3. Configure database settings in includes/config.php
+4. Access the admin panel at /admin/
+5. Default login credentials:
+   - Username: admin
+   - Password: admin123
+
+## Technologies Used
+
+- PHP
+- MySQL
+- HTML/CSS
+- JavaScript

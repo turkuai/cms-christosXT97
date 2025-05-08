@@ -3,12 +3,17 @@
         {
             "title": "asdasdasdas",
             "content": "<p title=\"Double-click to edit\">sdasdasdasdasdas<\/p>",
+            "image": "https:\/\/encrypted-tbn0.gstatic.com\/images?q=tbn:ANd9GcQozElKZz-x5kMbN26WwIEx6E9vPsaoael2aA&s"
+        },
+        {
+            "title": "DSADADASA title for your new article",
+            "content": "<p>Click to edit this new article content. Double-click any text to edit it directly.<\/p>",
             "image": "https:\/\/www.novacrystallis.com\/wp-content\/uploads\/2019\/01\/snow2.png"
         },
         {
             "title": "A title for your new article",
             "content": "<p>Click to edit this new article content. Double-click any text to edit it directly.<\/p>",
-            "image": "https:\/\/www.novacrystallis.com\/wp-content\/uploads\/2019\/01\/snow2.png"
+            "image": ""
         }
     ],
     "company": {

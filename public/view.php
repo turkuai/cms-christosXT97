@@ -1,81 +1,131 @@
 <?php
-// Include shared functions
-require_once '../includes/functions.php';
+// Include configuration and functions
+require_once('../includes/config.php');
+require_once('../includes/functions.php');
+require_once('../includes/auth.php'); // Include auth functions
 
-// Load content data
-$content = loadContentData();
+// Check if the getFooterLinks function exists
+if (!function_exists('getFooterLinks')) {
+    // Fallback function in case the original isn't available
+    function getFooterLinks($position = '') {
+        return []; // Return empty array as fallback
+    }
+}
+
+// Get article ID from URL
+$articleId = isset($_GET['id']) ? intval($_GET['id']) : 0;
+
+// Check if no article ID was provided
+if ($articleId <= 0) {
+    // Redirect to the articles list
+    header('Location: index.php');
+    exit;
+}
+
+// Get article content from database - get from either admin or front-end
+$isAdmin = isset($_GET['admin']) && $_GET['admin'] == 1;
+$article = null;
+
+if ($isAdmin && isLoggedIn()) {
+    // If accessed from admin and logged in, get article regardless of status
+    $article = getArticleByIdAdmin($articleId);
+} else {
+    // If accessed from public, only get published articles
+    $article = getArticleById($articleId);
+}
+
+// If article doesn't exist, redirect instead of showing error
+if (!$article) {
+    if ($isAdmin && isLoggedIn()) {
+        // If admin is trying to view a deleted article, redirect to admin dashboard
+        header('Location: ../admin/index.php?deleted=1');
+        exit;
+    } else {
+        // If public user is trying to view a non-existent article, redirect to home
+        header('Location: index.php');
+        exit;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CMS Website - View</title>
-    <link rel="stylesheet" href="css/view.css">
+    <title><?php echo htmlspecialchars($article['title']); ?> - <?php echo SITE_NAME; ?></title>
+    <link rel="stylesheet" href="../assets/css/view.css">
 </head>
 <body>
-    <!-- Header Section -->
     <header>
         <div class="logo">LOGO</div>
         <nav>
             <ul>
-                <li><a href="view.php">Home</a></li>
-                <li><a href="view-about.php">About</a></li>
-                <li><a href="view-blog.php">Blog</a></li>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="about.php">About</a></li>
+                <li><a href="blog.php">Blog</a></li>
+                <?php if (isLoggedIn()): ?>
+                <li><a href="../admin/index.php">Admin</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
     </header>
 
-    <!-- Main Content Section -->
     <main>
-        <?php if (empty($content['articles'])): ?>
-            <div class="no-content">
-                <p>No content available. Please add articles in the admin panel.</p>
-            </div>
-        <?php else: ?>
-            <?php foreach ($content['articles'] as $article): ?>
-                <article class="content-box">
-                    <div class="article-content">
-                        <h2><?php echo htmlspecialchars($article['title']); ?></h2>
-                        <?php echo $article['content']; ?>
-                    </div>
-                    <div class="article-image">
-                        <?php if (!empty($article['image'])): ?>
-                            <div class="view-image" style="background-image: url('<?php echo htmlspecialchars($article['image']); ?>');"></div>
-                        <?php else: ?>
-                            <div class="view-image"></div>
-                        <?php endif; ?>
-                    </div>
-                </article>
-            <?php endforeach; ?>
+        <?php if ($isAdmin && $article['status'] === 'draft'): ?>
+        <div class="draft-notice">
+            <strong>Draft Article:</strong> This article is not visible to the public.
+        </div>
         <?php endif; ?>
+        
+        <div class="content-box">
+            <div class="article-content">
+                <h2><?php echo htmlspecialchars($article['title']); ?></h2>
+                <div class="article-meta">
+                    <span>Status: 
+                        <span class="status-indicator status-<?php echo $article['status']; ?>">
+                            <?php echo ucfirst($article['status']); ?>
+                        </span>
+                    </span>
+                    <span>Created: <?php echo formatDate($article['created_at']); ?></span>
+                </div>
+                <?php echo $article['content']; ?>
+            </div>
+            <?php if (!empty($article['image_url'])): ?>
+            <div class="article-image">
+                <img src="<?php echo htmlspecialchars('../' . $article['image_url']); ?>" alt="<?php echo htmlspecialchars($article['title']); ?>" class="view-image">
+            </div>
+            <?php endif; ?>
+        </div>
     </main>
 
-    <!-- Footer Section -->
     <footer>
-        <div class="footer-left">
-            <h3><?php echo htmlspecialchars($content['company']['name']); ?></h3>
-            <p><?php echo htmlspecialchars($content['company']['description']); ?></p>
-            <p><?php echo htmlspecialchars($content['company']['copyright']); ?></p>
-        </div>
-        <div class="footer-center">
+        <div>Your company's name</div>
+        <div>
             <ul>
-                <li><a href="view.php">Home</a></li>
-                <li><a href="view-about.php">About</a></li>
-                <li><a href="view-blog.php">Blog</a></li>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="about.php">About</a></li>
+                <li><a href="blog.php">Blog</a></li>
             </ul>
         </div>
-        <div class="footer-right">
+        <div>
             <ul>
-                <?php if (isset($content['socialLinks']) && !empty($content['socialLinks'])): ?>
-                    <?php foreach ($content['socialLinks'] as $link): ?>
-                        <li><a href="<?php echo htmlspecialchars($link['url']); ?>" target="_blank"><?php echo htmlspecialchars($link['label']); ?></a></li>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
-                    <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
-                    <li><a href="https://github.com" target="_blank">GitHub</a></li>
-                <?php endif; ?>
+                <?php 
+                // Try-catch to prevent errors
+                try {
+                    $footerLinks = getFooterLinks('right');
+                    foreach ($footerLinks as $link): 
+                    ?>
+                    <li><a href="<?php echo htmlspecialchars($link['url']); ?>"><?php echo htmlspecialchars($link['name']); ?></a></li>
+                    <?php endforeach;
+                } catch (Exception $e) {
+                    // Fallback social links if function fails
+                    ?>
+                    <li><a href="https://facebook.com">Facebook</a></li>
+                    <li><a href="https://linkedin.com">LinkedIn</a></li>
+                    <li><a href="https://github.com">GitHub</a></li>
+                    <?php
+                }
+                ?>
             </ul>
         </div>
     </footer>

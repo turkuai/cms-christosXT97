@@ -1,4 +1,3 @@
-/* Enhanced Color Scheme for CMS View Page */
 :root {
     /* Primary Colors */
     --primary-color: #3b82f6;
@@ -14,6 +13,11 @@
     --neutral-600: #6b7280;
     --neutral-700: #4b5563;
     --neutral-800: #374151;
+    
+    /* Alert Colors */
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
 }
 
 * {
@@ -97,6 +101,12 @@ main {
     margin-bottom: 2px;
 }
 
+main h1 {
+    margin-bottom: 20px;
+    color: var(--neutral-800);
+    font-size: 28px;
+}
+
 .content-box {
     background: linear-gradient(to right bottom, var(--neutral-100), var(--neutral-200));
     margin-bottom: 20px;
@@ -106,6 +116,8 @@ main {
     display: flex;
     justify-content: space-between;
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    min-height: 200px;
+    overflow: hidden;
 }
 
 .article-content {
@@ -131,18 +143,18 @@ main {
 .article-image {
     min-width: 220px;
     width: 30%;
+    height: auto;
+    display: flex;
+    align-items: center;
 }
 
 .view-image {
     width: 100%;
-    height: 150px;
+    height: auto;
+    max-height: 300px;
     border: 1px solid var(--neutral-400);
-    position: relative;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-color: var(--neutral-100);
     border-radius: 4px;
+    object-fit: contain;
 }
 
 /* X marks for empty placeholder */
@@ -179,6 +191,25 @@ footer {
     box-shadow: 0 -2px 4px rgba(0,0,0,0.08);
 }
 
+footer ul {
+    list-style: none;
+}
+
+footer ul li {
+    margin-bottom: 5px;
+}
+
+footer a {
+    color: var(--neutral-100);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+footer a:hover {
+    color: var(--neutral-200);
+    text-decoration: underline;
+}
+
 .footer-links {
     display: flex;
 }
@@ -207,6 +238,7 @@ footer {
     margin-top: 30px;
 }
 
+.pagination a,
 .pagination button {
     background-color: var(--neutral-100);
     border: 1px solid var(--neutral-400);
@@ -216,13 +248,16 @@ footer {
     cursor: pointer;
     border-radius: 4px;
     transition: all 0.2s ease;
+    text-decoration: none;
 }
 
+.pagination a:hover,
 .pagination button:hover {
     background-color: var(--primary-light);
     border-color: var(--primary-color);
 }
 
+.pagination a.active,
 .pagination button.active {
     background-color: var(--primary-color);
     color: var(--neutral-100);
@@ -240,7 +275,7 @@ footer {
 }
 
 .status-published {
-    background-color: #10b981;
+    background-color: var(--success);
     color: white;
 }
 
@@ -250,7 +285,7 @@ footer {
 }
 
 .status-pending {
-    background-color: #f59e0b;
+    background-color: var(--warning);
     color: white;
 }
 
@@ -288,6 +323,7 @@ footer {
     transition: all 0.2s ease;
     display: flex;
     align-items: center;
+    text-decoration: none;
 }
 
 .btn i {
@@ -313,7 +349,7 @@ footer {
 }
 
 .btn-danger {
-    background-color: #ef4444;
+    background-color: var(--danger);
     color: var(--neutral-100);
 }
 
@@ -349,6 +385,11 @@ footer {
         align-items: center;
     }
     
+    footer > div {
+        margin-bottom: 15px;
+        text-align: center;
+    }
+    
     .footer-links {
         margin-bottom: 15px;
     }
@@ -361,12 +402,7 @@ footer {
     background-color: var(--neutral-100);
     border-radius: 4px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-}
-
-.empty-state i {
-    font-size: 48px;
-    color: var(--neutral-500);
-    margin-bottom: 15px;
+    margin: 20px 0;
 }
 
 .empty-state h3 {
@@ -426,4 +462,21 @@ footer {
 .tooltip:hover .tooltip-text {
     visibility: visible;
     opacity: 1;
+}
+
+/* Articles List */
+.articles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Draft notice */
+.draft-notice {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    border-left: 4px solid #f5c6cb;
 }
