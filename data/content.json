@@ -3,22 +3,48 @@
         {
             "title": "asdasdasdas",
             "content": "<p title=\"Double-click to edit\">sdasdasdasdasdas<\/p>",
+<<<<<<< HEAD
             "image": "https:\/\/encrypted-tbn0.gstatic.com\/images?q=tbn:ANd9GcQozElKZz-x5kMbN26WwIEx6E9vPsaoael2aA&s"
         },
         {
             "title": "DSADADASA title for your new article",
             "content": "<p>Click to edit this new article content. Double-click any text to edit it directly.<\/p>",
             "image": "https:\/\/www.novacrystallis.com\/wp-content\/uploads\/2019\/01\/snow2.png"
+=======
+            "image": "https:\/\/www.theleathercity.com\/wp-content\/uploads\/2023\/06\/Final-Fantasy-13-Snow-Villiers-Coat-500x588.jpg"
+>>>>>>> e622874ab56bad507c27bd87b931504de6540236
         },
         {
             "title": "A title for your new article",
             "content": "<p>Click to edit this new article content. Double-click any text to edit it directly.<\/p>",
+<<<<<<< HEAD
             "image": ""
+=======
+            "image": "https:\/\/www.theleathercity.com\/wp-content\/uploads\/2023\/06\/Final-Fantasy-13-Snow-Villiers-Coat-500x588.jpg"
+>>>>>>> e622874ab56bad507c27bd87b931504de6540236
         }
     ],
     "company": {
         "name": "Your company's name",
         "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
         "copyright": "\u00a9 2024, Company's name. All rights reserved"
-    }
+    },
+    "socialLinks": [
+        {
+            "label": "Facebook",
+            "url": "https:\/\/facebook.com\/"
+        },
+        {
+            "label": "LinkedIn",
+            "url": "https:\/\/linkedin.com\/"
+        },
+        {
+            "label": "GitHub",
+            "url": "https:\/\/github.com\/"
+        },
+        {
+            "label": "Crunchyroll",
+            "url": "https:\/\/www.crunchyroll.com\/?srsltid=AfmBOorD_wX57pgUFGWOFgGimt_gNbjB8K6c9vYiwk23xI9GX1IAeyX9"
+        }
+    ]
 }

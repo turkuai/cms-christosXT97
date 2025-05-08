@@ -1,4 +1,4 @@
-/*styles.css
+/* admin/css/styles.css
 
 /* Enhanced Color Scheme for CMS */
 :root {
@@ -27,11 +27,6 @@
     --neutral-700: #4b5563;
     --neutral-800: #374151;
     --neutral-900: #1f2937;
-    
-    /* Error Colors */
-    --error-color: #ef4444;
-    --error-light: #fee2e2;
-    --error-dark: #b91c1c;
 }
 
 * {
@@ -80,7 +75,6 @@ header {
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     letter-spacing: 1px;
-    position: relative;
 }
 
 nav ul {
@@ -140,7 +134,6 @@ main {
     justify-content: space-between;
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    position: relative;
 }
 
 .content-box:hover {
@@ -148,31 +141,17 @@ main {
     box-shadow: 0 6px 10px rgba(0,0,0,0.08);
 }
 
-.article-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    width: 100%;
-}
-
-.article-controls {
-    display: flex;
-    align-items: center;
-}
-
 .article-content {
     flex: 1;
     margin-right: 20px;
-    position: relative;
 }
 
 .article-content h2 {
     font-size: 22px;
+    margin-bottom: 15px;
     color: var(--primary-dark);
     border-bottom: 2px solid var(--primary-light);
     padding-bottom: 8px;
-    margin-right: 70px;
 }
 
 .article-content p {
@@ -190,7 +169,6 @@ main {
 .image-container {
     display: flex;
     flex-direction: column;
-    position: relative;
 }
 
 .placeholder-image {
@@ -315,7 +293,6 @@ footer {
 
 .footer-left {
     flex: 0 0 40%;
-    position: relative;
 }
 
 .footer-left h3 {
@@ -323,7 +300,6 @@ footer {
     margin-bottom: 15px;
     color: var(--neutral-100);
     font-weight: 600;
-    position: relative;
 }
 
 .footer-left p {
@@ -331,7 +307,6 @@ footer {
     margin-bottom: 10px;
     line-height: 1.5;
     color: var(--neutral-200);
-    position: relative;
 }
 
 .footer-center, .footer-right {
@@ -346,7 +321,6 @@ footer {
 
 .footer-center li, .footer-right li {
     margin-bottom: 12px;
-    position: relative;
 }
 
 .footer-center a, .footer-right a {
@@ -410,279 +384,49 @@ footer {
     transition: opacity 0.3s ease;
 }
 
-/* Edit and Delete Buttons */
-.edit-btn, .delete-btn, .add-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 4px;
-    border-radius: 50%;
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-    position: absolute;
-}
-
-.edit-btn {
-    color: var(--primary-color);
-    font-size: 16px;
-}
-
-.edit-btn:hover {
-    background-color: var(--primary-light);
-}
-
-.delete-btn {
-    color: var(--error-color);
-    font-size: 20px;
-    top: 20px;
-    right: 20px;
-}
-
-.delete-btn:hover {
-    color: var(--error-dark);
-}
-
-.edit-btn.image-edit-btn {
-    top: 5px;
-    right: 5px;
-    background-color: rgba(255, 255, 255, 0.8);
-    z-index: 10;
-}
-
-.content-edit-btn {
-    bottom: 0;
-    right: 20px;
-    position: relative;
-    margin-top: 10px;
-    display: inline-block;
-}
-
-/* Footer button positioning */
-.footer-left h3 .edit-btn {
-    position: absolute;
-    right: -30px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.footer-left p .edit-btn {
-    position: absolute;
-    right: -30px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.footer-right li .edit-btn {
-    position: absolute;
-    right: -30px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.footer-right li .delete-btn {
-    position: absolute;
-    right: -60px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 16px;
-}
-
-/* Add Article Button */
-.admin-actions {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
-}
-
-.add-btn {
-    color: var(--primary-color);
-    font-size: 30px;
-    position: relative;
-    width: 40px;
-    height: 40px;
-}
-
-.add-btn:hover {
-    color: var(--primary-dark);
-}
-
-#add-social-link-btn {
-    position: relative;
-    transform: none;
-    margin-top: 10px;
-}
-
-/* View Site Button */
+/* Admin-specific controls */
 .admin-controls {
-    margin-top: 30px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
+    margin-top: 30px;
+    margin-bottom: 15px;
 }
 
 .view-site-btn {
+    display: inline-block;
+    padding: 10px 20px;
     background-color: var(--primary-color);
     color: white;
     text-decoration: none;
-    padding: 10px 20px;
     border-radius: 4px;
     font-weight: 500;
     transition: background-color 0.2s ease;
-    display: inline-block;
 }
 
 .view-site-btn:hover {
     background-color: var(--primary-dark);
 }
 
-/* Modal Styling */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    align-items: center;
-    justify-content: center;
+/* Editable content styling */
+[contenteditable="true"] {
+    outline: 2px dashed var(--primary-color);
+    padding: 5px !important;
+    min-height: 1.5em;
 }
 
-.modal-content {
-    background-color: var(--neutral-100);
-    border-radius: 6px;
-    width: 90%;
-    max-width: 600px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    position: relative;
-    padding: 0;
-    overflow: hidden;
-}
-
-.modal-content h2 {
-    padding: 15px 20px;
-    margin: 0;
-    background-color: var(--primary-color);
-    color: var(--neutral-100);
-    font-size: 18px;
-}
-
-#modal-body {
-    padding: 20px;
-    max-height: 70vh;
-    overflow-y: auto;
-}
-
-.modal-footer {
-    padding: 15px 20px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    background-color: var(--neutral-200);
-    border-top: 1px solid var(--neutral-300);
-}
-
-.close-modal {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    color: var(--neutral-100);
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.btn {
-    padding: 8px 16px;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    border: none;
-    transition: all 0.2s ease;
-}
-
-.primary-btn {
-    background-color: var(--primary-color);
-    color: white;
-}
-
-.primary-btn:hover {
-    background-color: var(--primary-dark);
-}
-
-.secondary-btn {
-    background-color: var(--neutral-300);
-    color: var(--neutral-700);
-}
-
-.secondary-btn:hover {
-    background-color: var(--neutral-400);
-}
-
-/* Form Controls in Modal */
-.form-group {
-    margin-bottom: 16px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 500;
-    color: var(--neutral-700);
-}
-
-.form-control {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid var(--neutral-400);
-    border-radius: 4px;
-    font-size: 14px;
-}
-
-.form-control:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-}
-
-textarea.form-control {
-    min-height: 150px;
-    resize: vertical;
-}
-
-/* Notification */
+/* Notification styling */
 #save-notification {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     color: white;
     padding: 12px 20px;
     border-radius: 4px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
     opacity: 0;
     transition: opacity 0.3s ease;
-}
-
-/* Fade-in animation for new content */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.content-box.new {
-    animation: fadeInUp 0.5s ease-out forwards;
+    z-index: 1000;
 }
 
 /* Media Queries for Responsiveness */
@@ -708,5 +452,29 @@ textarea.form-control {
     .footer-left, .footer-center, .footer-right {
         margin-bottom: 20px;
         width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    header {
+        flex-wrap: wrap;
+    }
+    
+    .logo {
+        margin-bottom: 10px;
+        margin-right: 0;
+    }
+    
+    nav ul {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    nav ul li {
+        margin-right: 0;
+    }
+    
+    .content-box {
+        padding: 15px;
     }
 }

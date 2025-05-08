@@ -1,8 +1,15 @@
 <?php
+<<<<<<< HEAD
 // Include configuration and functions
 require_once('../includes/config.php');
 require_once('../includes/functions.php');
 require_once('../includes/auth.php'); // Include auth functions
+=======
+//public/view.php
+
+// Include shared functions
+require_once '../includes/functions.php';
+>>>>>>> e622874ab56bad507c27bd87b931504de6540236
 
 // Check if the getFooterLinks function exists
 if (!function_exists('getFooterLinks')) {
@@ -71,10 +78,33 @@ if (!$article) {
     </header>
 
     <main>
+<<<<<<< HEAD
         <?php if ($isAdmin && $article['status'] === 'draft'): ?>
         <div class="draft-notice">
             <strong>Draft Article:</strong> This article is not visible to the public.
         </div>
+=======
+        <?php if (empty($content['articles'])): ?>
+            <div class="no-content">
+                <p>No content available. Please add articles in the admin panel.</p>
+            </div>
+        <?php else: ?>
+            <?php foreach ($content['articles'] as $article): ?>
+                <article class="content-box">
+                    <div class="article-content">
+                        <h2><?php echo htmlspecialchars($article['title']); ?></h2>
+                        <?php echo $article['content']; ?>
+                    </div>
+                    <div class="article-image">
+                        <?php if (!empty($article['image'])): ?>
+                            <div class="view-image" style="background-image: url('<?php echo htmlspecialchars($article['image']); ?>'); background-size: cover; background-position: center center;"></div>
+                        <?php else: ?>
+                            <div class="view-image"></div>
+                        <?php endif; ?>
+                    </div>
+                </article>
+            <?php endforeach; ?>
+>>>>>>> e622874ab56bad507c27bd87b931504de6540236
         <?php endif; ?>
         
         <div class="content-box">
