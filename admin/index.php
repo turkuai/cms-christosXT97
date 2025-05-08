@@ -1,4 +1,5 @@
 <?php
+//index.php
 // Include configuration and functions
 require_once('../includes/config.php');
 require_once('../includes/functions.php');
@@ -12,10 +13,6 @@ if (!isLoggedIn()) {
 
 // Check for success message
 $success = isset($_GET['success']) ? intval($_GET['success']) : 0;
-
-// Check for deletion message
-$deleted = isset($_GET['deleted']) && $_GET['deleted'] == 1;
-$error = isset($_GET['error']) ? $_GET['error'] : '';
 
 // Get all articles for admin view
 $articles = getAllArticles();
@@ -35,7 +32,6 @@ $articles = getAllArticles();
             <ul>
                 <li><a href="index.php">Home</a></li>
                 <li><a href="edit-content.php">Add Content</a></li>
-                <li><a href="links.php">Footer Links</a></li>
                 <li><a href="../public/index.php" target="_blank">View Site</a></li>
             </ul>
         </nav>
@@ -50,18 +46,6 @@ $articles = getAllArticles();
         <?php if ($success): ?>
         <div class="success-message">
             <p>Article has been saved successfully!</p>
-        </div>
-        <?php endif; ?>
-
-        <?php if ($deleted): ?>
-        <div class="success-message">
-            <p>Article has been deleted successfully!</p>
-        </div>
-        <?php endif; ?>
-
-        <?php if (!empty($error)): ?>
-        <div class="error-message">
-            <p><?php echo htmlspecialchars($error); ?></p>
         </div>
         <?php endif; ?>
 

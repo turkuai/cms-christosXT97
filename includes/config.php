@@ -1,4 +1,5 @@
 <?php
+//includes/config.php
 // Database connection settings
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');         // Try using the root user

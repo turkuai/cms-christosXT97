@@ -1,4 +1,7 @@
 /**
+ * public/js/view-script.js
+ */
+/**
  * Save content to server
  */
 function saveToServer(type, index, value, field = null) {

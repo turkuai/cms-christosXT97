@@ -1,4 +1,5 @@
 <?php
+// includes/functions.php
 // Include database connection
 require_once('config.php');
 
@@ -123,143 +124,84 @@ function formatDate($date) {
 }
 
 /**
- * Get all footer links
- * @param string $position Optional position filter
- * @return array Footer links
+ * Get footer links from content data
+ * @return array Array of links
  */
-function getFooterLinks($position = '') {
-    try {
-        $conn = getDbConnection();
-        
-        $sql = "SELECT * FROM footer_links";
-        if (!empty($position)) {
-            $position = $conn->real_escape_string($position);
-            $sql .= " WHERE position = '$position'";
-        }
-        $sql .= " ORDER BY display_order ASC";
-        
-        $result = $conn->query($sql);
-        
-        $links = [];
-        if ($result && $result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $links[] = $row;
-            }
-        }
-        
-        return $links;
-    } catch (Exception $e) {
-        // Return default links if anything goes wrong
-        return [
-            ['name' => 'Facebook', 'url' => 'https://facebook.com'],
-            ['name' => 'LinkedIn', 'url' => 'https://linkedin.com'],
-            ['name' => 'GitHub', 'url' => 'https://github.com']
-        ];
+function getFooterLinks() {
+    // Default links if nothing is set
+    $defaultLinks = [
+        ['label' => 'Facebook', 'url' => 'https://facebook.com'],
+        ['label' => 'LinkedIn', 'url' => 'https://linkedin.com'],
+        ['label' => 'GitHub', 'url' => 'https://github.com']
+    ];
+    
+    // Get from stored content
+    $content = loadContentData();
+    
+    if (isset($content['socialLinks']) && !empty($content['socialLinks'])) {
+        return $content['socialLinks'];
     }
+    
+    return $defaultLinks;
 }
 
 /**
- * Get a footer link by ID
- * @param int $id Link ID
- * @return array|bool Link data or false if not found
+ * Load content data from storage
+ * @return array
  */
-function getFooterLinkById($id) {
-    try {
-        $conn = getDbConnection();
-        $id = intval($id);
+function loadContentData() {
+    $dataFile = __DIR__ . '/../data/content.json';
+    
+    // Create default content structure
+    $defaultContent = [
+        'articles' => [],
+        'company' => [
+            'name' => 'Your company\'s name',
+            'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+            'copyright' => '© ' . date('Y') . ', Company\'s name. All rights reserved'
+        ],
+        'socialLinks' => [
+            ['label' => 'Facebook', 'url' => 'https://facebook.com'],
+            ['label' => 'LinkedIn', 'url' => 'https://linkedin.com'],
+            ['label' => 'GitHub', 'url' => 'https://github.com']
+        ]
+    ];
+    
+    // Check if the data file exists
+    if (file_exists($dataFile)) {
+        $content = json_decode(file_get_contents($dataFile), true);
         
-        $sql = "SELECT * FROM footer_links WHERE id = $id";
-        $result = $conn->query($sql);
-        
-        if ($result && $result->num_rows > 0) {
-            return $result->fetch_assoc();
-        }
-        
-        return false;
-    } catch (Exception $e) {
-        return false;
-    }
-}
-
-/**
- * Save a footer link
- * @param array $data Link data
- * @return bool Success or failure
- */
-function saveFooterLink($data) {
-    try {
-        $conn = getDbConnection();
-        
-        $name = $conn->real_escape_string($data['name']);
-        $url = $conn->real_escape_string($data['url']);
-        $position = $conn->real_escape_string($data['position']);
-        $order = intval($data['display_order']);
-        $id = isset($data['id']) ? intval($data['id']) : 0;
-        
-        if ($id > 0) {
-            // Update existing link
-            $sql = "UPDATE footer_links SET 
-                    name = '$name',
-                    url = '$url',
-                    position = '$position',
-                    display_order = $order
-                    WHERE id = $id";
-        } else {
-            // Insert new link
-            $sql = "INSERT INTO footer_links (name, url, position, display_order)
-                    VALUES ('$name', '$url', '$position', $order)";
+        // If JSON is invalid, use default content
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return $defaultContent;
         }
         
-        return $conn->query($sql) === TRUE;
-    } catch (Exception $e) {
-        return false;
+        return $content;
     }
+    
+    // If file doesn't exist, create it with default content
+    if (!is_dir(__DIR__ . '/../data')) {
+        mkdir(__DIR__ . '/../data', 0777, true);
+    }
+    
+    file_put_contents($dataFile, json_encode($defaultContent, JSON_PRETTY_PRINT));
+    
+    return $defaultContent;
 }
 
 /**
- * Delete a footer link
- * @param int $id Link ID
- * @return bool Success or failure
+ * Save content data to storage
+ * @param array $content
+ * @return bool
  */
-function deleteFooterLink($id) {
-    try {
-        $conn = getDbConnection();
-        $id = intval($id);
-        
-        $sql = "DELETE FROM footer_links WHERE id = $id";
-        return $conn->query($sql) === TRUE;
-    } catch (Exception $e) {
-        return false;
+function saveContentData($content) {
+    $dataFile = __DIR__ . '/../data/content.json';
+    
+    // Ensure data directory exists
+    if (!is_dir(__DIR__ . '/../data')) {
+        mkdir(__DIR__ . '/../data', 0777, true);
     }
-}
-
-/**
- * Check if a table exists in the database
- * @param string $tableName Table name to check
- * @return bool True if table exists, false otherwise
- */
-function tableExists($tableName) {
-    try {
-        $conn = getDbConnection();
-        $tableName = $conn->real_escape_string($tableName);
-        
-        $result = $conn->query("SHOW TABLES LIKE '$tableName'");
-        return $result && $result->num_rows > 0;
-    } catch (Exception $e) {
-        return false;
-    }
-}
-
-/**
- * Safe database query execution
- * @param string $sql SQL query to execute
- * @return bool|mysqli_result Result of the query or false on failure
- */
-function executeQuery($sql) {
-    try {
-        $conn = getDbConnection();
-        return $conn->query($sql);
-    } catch (Exception $e) {
-        return false;
-    }
+    
+    // Save content to file
+    return file_put_contents($dataFile, json_encode($content, JSON_PRETTY_PRINT)) !== false;
 }

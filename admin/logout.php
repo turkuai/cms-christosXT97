@@ -1,4 +1,5 @@
 <?php
+//logout.php
 // Include authentication functions
 require_once('../includes/auth.php');
 

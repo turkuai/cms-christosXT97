@@ -12,3 +12,4 @@ $content = loadContentData();
 
 // Return the data as JSON
 echo json_encode($content);
+?>

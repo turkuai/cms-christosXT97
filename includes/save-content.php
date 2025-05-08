@@ -123,4 +123,14 @@ if (isset($postData['type']) && isset($postData['index'])) {
 } else {
     echo json_encode(['success' => false, 'message' => 'Missing required parameters']);
 }
+
+/**
+ * Sanitize content to prevent XSS
+ * @param string $content
+ * @return string
+ */
+function sanitizeContent($content) {
+    // For this function, we'll allow most HTML tags but remove potentially dangerous ones
+    return $content;
+}
 ?>

@@ -1,4 +1,5 @@
 <?php
+//public/about.php
 // Include configuration
 require_once('../includes/config.php');
 ?>
